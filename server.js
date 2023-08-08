@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
     credentials: true,
-    origin: 'https://mern-chat-app-kashan.netlify.app/'
+    origin: 'https://mern-chat-app-kashan.netlify.app'
 }))
 app.use('/uploads', express.static(__dirname + "/uploads"))
 dotenv.config()
