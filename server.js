@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
     credentials: true,
-    origin: 'http://localhost:5173'
+    origin: 'https://64d1e13145b850341a1587e6--subtle-sunshine-1201c8.netlify.app/'
 }))
 app.use('/uploads', express.static(__dirname + "/uploads"))
 dotenv.config()
