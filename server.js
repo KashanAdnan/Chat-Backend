@@ -6,7 +6,7 @@ const { UserModel } = require('./Model/User.js')
 const cors = require('cors')
 const bcrypt = require("bcryptjs")
 const cookieParser = require("cookie-parser")
-const wss = require("wss")
+const ws = require("ws")
 const fs = require("fs")
 const { MessageModel } = require("./Model/Message.js")
 
@@ -116,12 +116,12 @@ app.post("/login", async (req, res) => {
 const server = app.listen(process.env.PORT)
 
 
-const wsse = new wss.WebSocketServer({ server })
-wsse.on('connection', (connection, req) => {
+const wss = new ws.WebSocketServer({ server })
+wss.on('connection', (connection, req) => {
     function notifyAboutOnlinePeople() {
-        [...wsse.clients].forEach(client => {
+        [...wss.clients].forEach(client => {
             client.send(JSON.stringify({
-                online: [...wsse.clients].map(c => ({ userId: c.userId, username: c.username }))
+                online: [...wss.clients].map(c => ({ userId: c.userId, username: c.username }))
             }))
         });
     }
@@ -177,7 +177,7 @@ wsse.on('connection', (connection, req) => {
                 text,
                 file: file ? filename : null
             });
-            [...wsse.clients]
+            [...wss.clients]
                 .filter(c => c.userId === recipent)
                 .forEach(c => c.send(JSON.stringify({
                     text,
