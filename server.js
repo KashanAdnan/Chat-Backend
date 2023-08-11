@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
     credentials: true,
-    origin: 'mern-chat-app-kashan'
+    origin: 'https://guileless-cactus-6fae53.netlify.app'
 }))
 app.use('/uploads', express.static(__dirname + "/uploads"))
 dotenv.config()
@@ -113,7 +113,7 @@ app.post("/login", async (req, res) => {
     }
 })
 
-const server = app.listen(process.env.PORT)
+const server = app.listen(4000)
 
 
 const wss = new ws.WebSocketServer({ server })
