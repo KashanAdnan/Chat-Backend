@@ -6,7 +6,7 @@ const { UserModel } = require('./Model/User.js')
 const cors = require('cors')
 const bcrypt = require("bcryptjs")
 const cookieParser = require("cookie-parser")
-const ws = require("ws")
+const wss = require("wss")
 const fs = require("fs")
 const { MessageModel } = require("./Model/Message.js")
 
@@ -113,10 +113,10 @@ app.post("/login", async (req, res) => {
     }
 })
 
-const server = app.listen(4000)
+const server = app.listen(process.env.PORT)
 
 
-const wss = new ws.WebSocketServer({ server })
+const wss = new wss.WebSocketServer({ server })
 wss.on('connection', (connection, req) => {
     function notifyAboutOnlinePeople() {
         [...wss.clients].forEach(client => {
