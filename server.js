@@ -116,12 +116,12 @@ app.post("/login", async (req, res) => {
 const server = app.listen(process.env.PORT)
 
 
-const wss = new wss.WebSocketServer({ server })
-wss.on('connection', (connection, req) => {
+const wsse = new wss.WebSocketServer({ server })
+wsse.on('connection', (connection, req) => {
     function notifyAboutOnlinePeople() {
-        [...wss.clients].forEach(client => {
+        [...wsse.clients].forEach(client => {
             client.send(JSON.stringify({
-                online: [...wss.clients].map(c => ({ userId: c.userId, username: c.username }))
+                online: [...wsse.clients].map(c => ({ userId: c.userId, username: c.username }))
             }))
         });
     }
@@ -177,7 +177,7 @@ wss.on('connection', (connection, req) => {
                 text,
                 file: file ? filename : null
             });
-            [...wss.clients]
+            [...wsse.clients]
                 .filter(c => c.userId === recipent)
                 .forEach(c => c.send(JSON.stringify({
                     text,
